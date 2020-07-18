@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using CsvHelper.Configuration;
+﻿using CsvHelper.Configuration;
 using TransactionData.Domain.Constants;
 using TransactionData.Domain.Models;
 
-namespace TransactionData.Service.Dxos
+namespace TransactionData.Service.CsvMap
 {
     public sealed class CsvTransactionMap : ClassMap<CsvTransactionModel>
     {

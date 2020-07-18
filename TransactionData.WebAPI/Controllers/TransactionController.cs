@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CSharpFunctionalExtensions;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,14 +22,9 @@ namespace TransactionData.WebAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveCsv(IFormFile formFile)
         {
-            if (formFile != null)
-            {
-                var stream = formFile.OpenReadStream();
-
-                return Ok(await CommandAsync(SaveCsvCommand.CreateInstance(stream)));
-            }
-
-            return Ok();
+            var stream = formFile.OpenReadStream();
+            var a = (await CommandAsync(SaveCsvCommand.CreateInstance(stream)));
+            return a.Match<Unit, IActionResult, string>(unit => Ok(), s => BadRequest(s));
         }
     }
 }

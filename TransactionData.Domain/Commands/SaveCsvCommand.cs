@@ -7,7 +7,7 @@ using MediatR;
 
 namespace TransactionData.Domain.Commands
 {
-    public class SaveCsvCommand : IRequest<Result>
+    public class SaveCsvCommand : IRequest<Result<Unit, string>>
     {
         public SaveCsvCommand(Stream stream)
         {

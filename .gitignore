@@ -28,6 +28,9 @@ msbuild.log
 msbuild.err
 msbuild.wrn
 node_modules/
+*.db
+*.db-shm
+*.db-wal
 .dist/
 .idea/
 # Visual Studio 2015

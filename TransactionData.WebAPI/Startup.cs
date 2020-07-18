@@ -11,6 +11,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using TransactionData.Data;
+using TransactionData.IoC;
 
 namespace TransactionData.WebAPI
 {
@@ -26,8 +29,7 @@ namespace TransactionData.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var assembly = AppDomain.CurrentDomain.Load("TransactionData.Service");
-            services.AddMediatR(assembly);
+            services.ConfigureServices(Configuration);
 
             services.AddSwaggerGen(c =>
             {

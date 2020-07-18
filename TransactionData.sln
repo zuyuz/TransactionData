@@ -3,11 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30128.74
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionData.WebAPI", "TransactionData.WebAPI\TransactionData.WebAPI.csproj", "{974ABE1E-6E63-4D4C-BB06-8A6F4EAC227B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionData.WebAPI", "TransactionData.WebAPI\TransactionData.WebAPI.csproj", "{974ABE1E-6E63-4D4C-BB06-8A6F4EAC227B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionData.Domain", "TransactionData.Domain\TransactionData.Domain.csproj", "{C1B978A4-3003-46A5-B523-446EA844B8B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionData.Domain", "TransactionData.Domain\TransactionData.Domain.csproj", "{C1B978A4-3003-46A5-B523-446EA844B8B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionData.Service", "TransactionData.Service\TransactionData.Service.csproj", "{3DC2747E-B946-434A-BE62-81C5D092935B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionData.Service", "TransactionData.Service\TransactionData.Service.csproj", "{3DC2747E-B946-434A-BE62-81C5D092935B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionData.Data", "TransactionData.Data\TransactionData.Data.csproj", "{75740448-3D0A-49BE-91FF-B0D7030A4ECF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionData.Data.Interfaces", "TransactionData.Data.Interfaces\TransactionData.Data.Interfaces.csproj", "{C8AED0FD-7C65-4DA5-9854-175108A41B79}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionData.Data.Entities", "TransactionData.Data.Entities\TransactionData.Data.Entities.csproj", "{C174E839-D427-4C49-8771-576C45166559}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionData.IoC", "TransactionData.IoC\TransactionData.IoC.csproj", "{95BEDFE7-5DD2-45F0-A5EF-CBC1EC930E1E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +35,22 @@ Global
 		{3DC2747E-B946-434A-BE62-81C5D092935B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DC2747E-B946-434A-BE62-81C5D092935B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DC2747E-B946-434A-BE62-81C5D092935B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75740448-3D0A-49BE-91FF-B0D7030A4ECF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75740448-3D0A-49BE-91FF-B0D7030A4ECF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75740448-3D0A-49BE-91FF-B0D7030A4ECF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75740448-3D0A-49BE-91FF-B0D7030A4ECF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8AED0FD-7C65-4DA5-9854-175108A41B79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8AED0FD-7C65-4DA5-9854-175108A41B79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8AED0FD-7C65-4DA5-9854-175108A41B79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8AED0FD-7C65-4DA5-9854-175108A41B79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C174E839-D427-4C49-8771-576C45166559}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C174E839-D427-4C49-8771-576C45166559}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C174E839-D427-4C49-8771-576C45166559}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C174E839-D427-4C49-8771-576C45166559}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95BEDFE7-5DD2-45F0-A5EF-CBC1EC930E1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95BEDFE7-5DD2-45F0-A5EF-CBC1EC930E1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95BEDFE7-5DD2-45F0-A5EF-CBC1EC930E1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95BEDFE7-5DD2-45F0-A5EF-CBC1EC930E1E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

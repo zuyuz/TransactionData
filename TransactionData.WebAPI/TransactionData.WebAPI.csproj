@@ -7,11 +7,17 @@
   <ItemGroup>
     <PackageReference Include="MediatR" Version="8.0.2" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TransactionData.Data\TransactionData.Data.csproj" />
     <ProjectReference Include="..\TransactionData.Domain\TransactionData.Domain.csproj" />
+    <ProjectReference Include="..\TransactionData.IoC\TransactionData.IoC.csproj" />
     <ProjectReference Include="..\TransactionData.Service\TransactionData.Service.csproj" />
   </ItemGroup>
 

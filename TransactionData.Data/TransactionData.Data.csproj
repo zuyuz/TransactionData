@@ -5,14 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="10.0.0" />
-    <PackageReference Include="CsvHelper" Version="15.0.5" />
-    <PackageReference Include="MediatR" Version="8.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.6" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TransactionData.Data.Entities\TransactionData.Data.Entities.csproj" />
     <ProjectReference Include="..\TransactionData.Data.Interfaces\TransactionData.Data.Interfaces.csproj" />
-    <ProjectReference Include="..\TransactionData.Domain\TransactionData.Domain.csproj" />
   </ItemGroup>
 
 </Project>
