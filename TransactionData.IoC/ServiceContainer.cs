@@ -19,7 +19,8 @@ namespace TransactionData.IoC
             services.AddDbContext<TransactionDataContext>(options =>
                 options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddTransient<CsvTransactionDxo>();
+            services.AddTransient<CsvTransactionDxo>(); 
+            services.AddTransient<XmlTransactionDxo>();
 
             services.AddTransient<ITransactionRepository, TransactionRepository>();
         }

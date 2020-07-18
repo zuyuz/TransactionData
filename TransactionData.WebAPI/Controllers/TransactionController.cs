@@ -20,11 +20,21 @@ namespace TransactionData.WebAPI.Controllers
         }
 
         [HttpPost]
+        [Route("save-csv")]
         public async Task<IActionResult> SaveCsv(IFormFile formFile)
         {
             var stream = formFile.OpenReadStream();
             var a = (await CommandAsync(SaveCsvCommand.CreateInstance(stream)));
-            return a.Match<Unit, IActionResult, string>(unit => Ok(), s => BadRequest(s));
+            return a.Match<Unit, IActionResult, string>(unit => Ok(), BadRequest);
+        }
+
+        [HttpPost]
+        [Route("save-xml")]
+        public async Task<IActionResult> SaveXml(IFormFile formFile)
+        {
+            var stream = formFile.OpenReadStream();
+            var a = (await CommandAsync(SaveXmlCommand.CreateInstance(stream)));
+            return a.Match<Unit, IActionResult, string>(unit => Ok(), BadRequest);
         }
     }
 }
