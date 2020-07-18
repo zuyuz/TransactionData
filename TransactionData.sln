@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.30128.74
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionData.WebAPI", "TransactionData.WebAPI\TransactionData.WebAPI.csproj", "{974ABE1E-6E63-4D4C-BB06-8A6F4EAC227B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionData.Domain", "TransactionData.Domain\TransactionData.Domain.csproj", "{C1B978A4-3003-46A5-B523-446EA844B8B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionData.Service", "TransactionData.Service\TransactionData.Service.csproj", "{3DC2747E-B946-434A-BE62-81C5D092935B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{974ABE1E-6E63-4D4C-BB06-8A6F4EAC227B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{974ABE1E-6E63-4D4C-BB06-8A6F4EAC227B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{974ABE1E-6E63-4D4C-BB06-8A6F4EAC227B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1B978A4-3003-46A5-B523-446EA844B8B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1B978A4-3003-46A5-B523-446EA844B8B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1B978A4-3003-46A5-B523-446EA844B8B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1B978A4-3003-46A5-B523-446EA844B8B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DC2747E-B946-434A-BE62-81C5D092935B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DC2747E-B946-434A-BE62-81C5D092935B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DC2747E-B946-434A-BE62-81C5D092935B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DC2747E-B946-434A-BE62-81C5D092935B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
