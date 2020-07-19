@@ -7,6 +7,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TransactionData.Domain.Commands;
+using TransactionData.Domain.Dtos;
 
 namespace TransactionData.WebAPI.Controllers
 {
@@ -20,7 +21,18 @@ namespace TransactionData.WebAPI.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> GetTransactions([FromBody] GetTransactionQuery query)
+        {
+            var a = await QueryAsync(query);
+            return a.Match<List<GetTransactionDto>, IActionResult, string>(dto => Ok(dto), dto => BadRequest(dto));
+        }
+
+        [HttpPost]
         [Route("save-csv")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
         public async Task<IActionResult> SaveCsv(IFormFile formFile)
         {
             var stream = formFile.OpenReadStream();
@@ -30,6 +42,8 @@ namespace TransactionData.WebAPI.Controllers
 
         [HttpPost]
         [Route("save-xml")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
         public async Task<IActionResult> SaveXml(IFormFile formFile)
         {
             var stream = formFile.OpenReadStream();
