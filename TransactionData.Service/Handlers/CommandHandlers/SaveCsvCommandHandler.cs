@@ -54,7 +54,7 @@ namespace TransactionData.Service.Services
             {
                 await _mediator.Publish(SaveCsvFailedEvent.CreateInstance(e.Message), cancellationToken);
 
-                return Result.Failure<Unit>(e.Message);
+                return Result.Failure<Unit>(e.InnerException?.Message ?? e.Message);
             }
         }
     }

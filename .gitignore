@@ -33,7 +33,9 @@ node_modules/
 *.db-wal
 .dist/
 .idea/
+Logs/
 # Visual Studio 2015
 .vs/
 packages/
+
 

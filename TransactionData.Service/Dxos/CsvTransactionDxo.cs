@@ -30,7 +30,7 @@ namespace TransactionData.Service.Dxos
             }
             catch (Exception e)
             {
-                return Result.Failure<IList<Transaction>>(e.Message);
+                return Result.Failure<IList<Transaction>>(e.InnerException?.Message ?? e.Message);
             }
         }
     }

@@ -32,7 +32,7 @@ namespace TransactionData.Service.Dxos
             }
             catch (Exception e)
             {
-                return Result.Failure<List<GetTransactionDto>>(e.Message);
+                return Result.Failure<List<GetTransactionDto>>(e.InnerException?.Message ?? e.Message);
             }
         }
     }

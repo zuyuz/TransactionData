@@ -22,19 +22,19 @@ namespace TransactionData.Service.ExtensionMethods
             }
             catch (UnauthorizedAccessException e)
             {
-                return Result.Failure<XmlTransactionModel>(e.Message);
+                return Result.Failure<XmlTransactionModel>(e.InnerException?.Message ?? e.Message);
             }
             catch (FieldValidationException e)
             {
-                return Result.Failure<XmlTransactionModel>(e.Message);
+                return Result.Failure<XmlTransactionModel>(e.InnerException?.Message ?? e.Message);
             }
             catch (CsvHelperException e)
             {
-                return Result.Failure<XmlTransactionModel>(e.Message);
+                return Result.Failure<XmlTransactionModel>(e.InnerException?.Message ?? e.Message);
             }
             catch (Exception e)
             {
-                return Result.Failure<XmlTransactionModel>(e.Message);
+                return Result.Failure<XmlTransactionModel>(e.InnerException?.Message ?? e.Message);
             }
         }
     }

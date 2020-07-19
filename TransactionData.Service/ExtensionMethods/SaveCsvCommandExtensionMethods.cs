@@ -24,7 +24,7 @@ namespace TransactionData.Service.ExtensionMethods
             }
             catch (Exception e)
             {
-                return Result.Failure<List<CsvTransactionModel>>(e.Message);
+                return Result.Failure<List<CsvTransactionModel>>(e.InnerException?.Message ?? e.Message);
             }
         }
     }

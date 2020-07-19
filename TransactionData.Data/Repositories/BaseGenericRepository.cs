@@ -29,7 +29,7 @@ namespace TransactionData.Data.Repositories
             }
             catch (Exception e)
             {
-                return Result.Failure<TEntity>(e.Message);
+                return Result.Failure<TEntity>(e.InnerException?.Message ?? e.Message);
             }
         }
 
@@ -42,7 +42,7 @@ namespace TransactionData.Data.Repositories
             }
             catch (Exception e)
             {
-                return Result.Failure<IList<TEntity>>(e.Message);
+                return Result.Failure<IList<TEntity>>(e.InnerException?.Message ?? e.Message);
             }
         }
 
@@ -55,7 +55,7 @@ namespace TransactionData.Data.Repositories
             }
             catch (Exception e)
             {
-                return Task.FromResult(Result.Failure<TEntity>(e.Message));
+                return Task.FromResult(Result.Failure<TEntity>(e.InnerException?.Message ?? e.Message));
             }
         }
 
@@ -68,7 +68,7 @@ namespace TransactionData.Data.Repositories
             }
             catch (Exception e)
             {
-                return Task.FromResult(Result.Failure<TEntity>(e.Message));
+                return Task.FromResult(Result.Failure<TEntity>(e.InnerException?.Message ?? e.Message));
             }
         }
 
@@ -81,7 +81,7 @@ namespace TransactionData.Data.Repositories
             }
             catch (Exception e)
             {
-                return Result.Failure<Unit>(e.Message);
+                return Result.Failure<Unit>(e.InnerException?.Message ?? e.Message);
             }
         }
     }

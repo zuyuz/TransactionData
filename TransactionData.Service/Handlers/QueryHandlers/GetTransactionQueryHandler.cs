@@ -44,7 +44,7 @@ namespace TransactionData.Service.Handlers.QueryHandlers
             }
             catch (Exception e)
             {
-                return Result.Failure< List<GetTransactionDto>, string>(e.Message);
+                return Result.Failure< List<GetTransactionDto>, string>(e.InnerException?.Message ?? e.Message);
             }
         }
     }
