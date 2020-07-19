@@ -1,4 +1,4 @@
-# TransactionData sample application
+# TransactionData application
 
 ![.NET Core](https://github.com/zuyuz/TransactionData/workflows/.NET%20Core/badge.svg?branch=master)
 
