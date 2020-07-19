@@ -12,16 +12,17 @@ using TransactionData.Domain.Commands;
 using TransactionData.Domain.Dtos;
 using TransactionData.Service.Dxos;
 using TransactionData.Service.ExtensionMethods;
+using TransactionData.Service.Interfaces.Dxos;
 
 namespace TransactionData.Service.Handlers.QueryHandlers
 {
     public class GetTransactionQueryHandler : IRequestHandler<GetTransactionQuery, Result<List<GetTransactionDto>, string>>
     {
         private readonly ITransactionRepository _transactionRepository;
-        private readonly TransactionDxo _transactionDxo;
+        private readonly ITransactionDxo _transactionDxo;
 
         public GetTransactionQueryHandler(ITransactionRepository transactionRepository,
-            TransactionDxo transactionDxo)
+            ITransactionDxo transactionDxo)
         {
             _transactionRepository = transactionRepository;
             _transactionDxo = transactionDxo;

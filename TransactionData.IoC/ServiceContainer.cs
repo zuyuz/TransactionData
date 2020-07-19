@@ -24,7 +24,7 @@ namespace TransactionData.IoC
 
             services.AddTransient<ICsvTransactionDxo, CsvTransactionDxo>(); 
             services.AddTransient<IXmlTransactionDxo, XmlTransactionDxo>();
-            services.AddTransient<TransactionDxo>();
+            services.AddTransient<ITransactionDxo, TransactionDxo>();
 
 
             services.AddTransient<ICsvTransactionService, CsvTransactionService>();

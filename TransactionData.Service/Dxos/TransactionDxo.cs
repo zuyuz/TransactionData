@@ -5,10 +5,11 @@ using CSharpFunctionalExtensions;
 using TransactionData.Data.Entities.Entities;
 using TransactionData.Domain.Dtos;
 using TransactionData.Domain.Models;
+using TransactionData.Service.Interfaces.Dxos;
 
 namespace TransactionData.Service.Dxos
 {
-    public class TransactionDxo
+    public class TransactionDxo : ITransactionDxo
     {
         private readonly IMapper _mapper;
 
