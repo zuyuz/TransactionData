@@ -12,8 +12,11 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using TransactionData.Data;
 using TransactionData.IoC;
+using TransactionData.WebAPI.Converters;
 
 namespace TransactionData.WebAPI
 {
@@ -35,7 +38,37 @@ namespace TransactionData.WebAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Transaction API", Version = "v1" });
             });
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                options.SerializerSettings.DateFormatHandling = DateFormatHandling.IsoDateFormat;
+                options.SerializerSettings.DateParseHandling = DateParseHandling.None;
+                options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                options.SerializerSettings.Converters.Add(new MultiFormatDateConverter
+                {
+                    DateTimeFormats = new List<string>()
+                    {
+                        "yyyy'-'MM'-'dd'T'HH':'mm':'ss",
+                        "yyyy'-'MM'-'dd'T'HH':'mm':'ssK",
+                        "yyyy'-'MM'-'dd'T'HH':'mm':'ss.f",
+                        "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fK",
+                        "yyyy'-'MM'-'dd'T'HH':'mm':'ss.ff",
+                        "yyyy'-'MM'-'dd'T'HH':'mm':'ss.ffK",
+                        "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fff",
+                        "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffK",
+                        "yyyy'-'MM'-'dd'T'HH':'mm':'ss.ffff",
+                        "yyyy'-'MM'-'dd'T'HH':'mm':'ss.ffffK",
+                        "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffff",
+                        "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffK",
+                        "yyyy'-'MM'-'dd'T'HH':'mm':'ss.ffffff",
+                        "yyyy'-'MM'-'dd'T'HH':'mm':'ss.ffffffK",
+                        "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffff",
+                        "yyyy'-'MM'-'dd'T'HH':'mm':'ss.fffffffK"
+                    }
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
