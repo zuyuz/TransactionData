@@ -41,13 +41,13 @@ namespace TransactionData.Service.Services
             try
             {
                 return await request.GetXmlTransactionModel()
-                    .Bind(xmlTransactionModel => _xmlTransactionDxo.MapTransaction(xmlTransactionModel)
-                        .Bind(async transactions =>
-                        {
-                            var result = await _transactionRepository.CreateAsync(transactions);
-                            return result.Bind(list => Result.Success(Unit.Value));
-                        })
-                        .Bind(async transactions => await _transactionRepository.SaveAsync()))
+                    .Bind(xmlTransactionModel => _xmlTransactionDxo.MapTransaction(xmlTransactionModel))
+                    .Bind(async transactions =>
+                    {
+                        var result = await _transactionRepository.CreateAsync(transactions);
+                        return result.Bind(Result.Success);
+                    })
+                    .Bind(async transactions => await _transactionRepository.SaveAsync())
                     .OnFailure(error =>
                         _mediator.Publish(SaveXmlFailedEvent.CreateInstance(error), cancellationToken));
                 

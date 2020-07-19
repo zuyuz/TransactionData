@@ -40,13 +40,13 @@ namespace TransactionData.Service.Services
             try
             {
                 return await request.GetCsvTransactionModel()
-                    .Bind(csvTransactionModel => _csvTransactionDxo.MapTransaction(csvTransactionModel)
-                        .Bind(async transactions =>
-                        {
-                            var result = await _transactionRepository.CreateAsync(transactions);
-                            return result.Bind(list => Result.Success(Unit.Value));
-                        })
-                        .Bind(async transactions => await _transactionRepository.SaveAsync()))
+                    .Bind(csvTransactionModel => _csvTransactionDxo.MapTransaction(csvTransactionModel))
+                    .Bind(async transactions =>
+                    {
+                        var result = await _transactionRepository.CreateAsync(transactions);
+                        return result.Bind(list => Result.Success(Unit.Value));
+                    })
+                    .Bind(async transactions => await _transactionRepository.SaveAsync())
                     .OnFailure(error =>
                         _mediator.Publish(SaveCsvFailedEvent.CreateInstance(error), cancellationToken));
             }

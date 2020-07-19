@@ -80,8 +80,9 @@ namespace TransactionData.WebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+            loggerFactory.AddFile("Logs/TransactionDataLog-Information-{Date}.txt");
 
-            loggerFactory.AddFile("Logs/TransactionDataLog-{Date}.txt", LogLevel.Error);
+            loggerFactory.AddFile("Logs/TransactionDataLog-Error-{Date}.txt", LogLevel.Error);
 
             app.UseRouting();
 
