@@ -29,10 +29,20 @@ namespace TransactionData.WebAPI.Controllers
             return a.Match<List<GetTransactionDto>, IActionResult, string>(dto => Ok(dto), dto => BadRequest(dto));
         }
 
+        /// <summary>
+        /// Endpoint processes CSV file, parses and stores data to database.
+        /// </summary>
+        /// <param name="formFile">Form file, that should contain CSV file.</param>
+        /// <returns>
+        /// Returns <see cref="OkResult"/> if success.
+        /// Returns <see cref="BadRequestResult"/> if file is corrupted or values, with provided keys, already exist.
+        /// Returns <see cref="UnprocessableEntityResult"/> if user sent NOT XML file.
+        /// </returns>
         [HttpPost]
         [Route("save-csv")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
+        [ProducesResponseType(422)]
         [RequestSizeLimit(1000000)]
         public async Task<IActionResult> SaveCsv(IFormFile formFile)
         {
@@ -43,10 +53,20 @@ namespace TransactionData.WebAPI.Controllers
                 .Match<IActionResult, Unit>(unit => Ok(), BadRequest);
         }
 
+        /// <summary>
+        /// Endpoint processes XML file, parses and stores data to database.
+        /// </summary>
+        /// <param name="formFile">Form file, that should contain XML file.</param>
+        /// <returns>
+        /// Returns <see cref="OkResult"/> if success.
+        /// Returns <see cref="BadRequestResult"/> if file is corrupted or values, with provided keys, already exist.
+        /// Returns <see cref="UnprocessableEntityResult"/> if user sent NOT XML file.
+        /// </returns>
         [HttpPost]
         [Route("save-xml")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
+        [ProducesResponseType(422)]
         [RequestSizeLimit(1000000)]
         public async Task<IActionResult> SaveXml(IFormFile formFile)
         {
