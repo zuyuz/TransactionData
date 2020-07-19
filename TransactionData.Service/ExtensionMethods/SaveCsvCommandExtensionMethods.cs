@@ -42,6 +42,18 @@ namespace TransactionData.Service.ExtensionMethods
 
                 return goodRows;
             }
+            catch (UnauthorizedAccessException e)
+            {
+                return Result.Failure<List<CsvTransactionModel>>(e.InnerException?.Message ?? e.Message);
+            }
+            catch (FieldValidationException e)
+            {
+                return Result.Failure<List<CsvTransactionModel>>(e.InnerException?.Message ?? e.Message);
+            }
+            catch (CsvHelperException e)
+            {
+                return Result.Failure<List<CsvTransactionModel>>(e.InnerException?.Message ?? e.Message);
+            }
             catch (Exception e)
             {
                 return Result.Failure<List<CsvTransactionModel>>(e.InnerException?.Message ?? e.Message);
