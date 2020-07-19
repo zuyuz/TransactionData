@@ -33,10 +33,11 @@ namespace TransactionData.WebAPI.Controllers
         [Route("save-csv")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
+        [RequestSizeLimit(1000000)]
         public async Task<IActionResult> SaveCsv(IFormFile formFile)
         {
-            if (formFile == null)
-                return NoContent();
+            if (formFile == null || formFile.ContentType != "application/vnd.ms-excel")
+                return UnprocessableEntity("Unknown format");
 
             return (await CommandAsync(SaveCsvCommand.CreateInstance(formFile.OpenReadStream())))
                 .Match<IActionResult, Unit>(unit => Ok(), BadRequest);
@@ -46,10 +47,11 @@ namespace TransactionData.WebAPI.Controllers
         [Route("save-xml")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
+        [RequestSizeLimit(1000000)]
         public async Task<IActionResult> SaveXml(IFormFile formFile)
         {
-            if (formFile == null)
-                return NoContent();
+            if (formFile == null || formFile.ContentType != "text/xml")
+                return UnprocessableEntity("Unknown format");
 
             return (await CommandAsync(SaveXmlCommand.CreateInstance(formFile.OpenReadStream())))
                 .Match<IActionResult, Unit>(unit => Ok(), BadRequest);
