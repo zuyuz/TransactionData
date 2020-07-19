@@ -16,38 +16,42 @@ This solution demonstrates how to create API, that accepts XML and CSV data file
 
 ## Overview
 
-### TransactionData.Data
-
-This project contains all entityConfigurations, repositories and DbContext.
-
-#### TransactionData.Data.Entities
-
-This project contains all entities, that are used to generate tables, using EF Core code-first approach.
-
-#### TransactionData.Data.Interfaces
-
-This project contains data contractor interfaces, that are used with Dependency injection to provide loose coupling between application and data provider.
-
-#### TransactionData.Data.MSSql
-
-This project contains Migrations for MSSQL database.
-
-#### TransactionData.Data.Sqlite
-
-This project contains Migrations for Sqlite database.
-
-### TransactionData.Service
-
-This project contains command, query and event handlers for managing application requests.
-
-###  TransactionData.Domain
+###  [TransactionData.Domain](https://github.com/zuyuz/TransactionData/tree/master/TransactionData.Domain)
 
 This project contains domain of application, which includes: commands, constants, dtos, enums, events, models and queries.
 
-###  TransactionData.IoC
+### [TransactionData.Data](https://github.com/zuyuz/TransactionData/tree/master/TransactionData.Data)
+
+This project contains all entityConfigurations, repositories and DbContext.
+
+#### [TransactionData.Data.Entities](https://github.com/zuyuz/TransactionData/tree/master/TransactionData.Data.Entities)
+
+This project contains all entities, that are used to generate tables, using EF Core code-first approach.
+
+#### [TransactionData.Data.Interfaces](https://github.com/zuyuz/TransactionData/tree/master/TransactionData.Data.Interfaces)
+
+This project contains data contractor interfaces, that are used with Dependency injection to provide loose coupling between application and data provider.
+
+#### [TransactionData.Data.MSSql](https://github.com/zuyuz/TransactionData/tree/master/TransactionData.Data.MSSql)
+
+This project contains Migrations for MSSQL database.
+
+#### [TransactionData.Data.Sqlite](https://github.com/zuyuz/TransactionData/tree/master/TransactionData.Data.Sqlite)
+
+This project contains Migrations for Sqlite database.
+
+### [TransactionData.Service](https://github.com/zuyuz/TransactionData/tree/master/TransactionData.Service)
+
+This project contains command, query and event handlers for managing application requests.
+
+#### [TransactionData.Service.Interfaces](https://github.com/zuyuz/TransactionData/tree/master/TransactionData.Service.Interfaces)
+
+This project contains abstractions for TransactionData.Service.
+
+###  [TransactionData.IoC](https://github.com/zuyuz/TransactionData/tree/master/TransactionData.IoC)
 
 This project represents Inversion of control, powered by ASP.NET Core DI mechanism. Introduces loose coupling between projects.
 
-### TransactionData.WebUI
+### [TransactionData.WebUI](https://github.com/zuyuz/TransactionData/tree/master/TransactionData.IoC)
 
 This layer is based on ASP.NET Core 3.1. Represents outer layer of application. Contains user friendly interface, powered by Swagger.
