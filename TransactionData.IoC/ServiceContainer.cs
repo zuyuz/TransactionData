@@ -17,7 +17,7 @@ namespace TransactionData.IoC
             var assembly = AppDomain.CurrentDomain.Load("TransactionData.Service");
             services.AddMediatR(assembly);
             services.AddDbContext<TransactionDataContext>(options =>
-                options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("TransactionData.Data.MSSql")));
 
             services.AddTransient<CsvTransactionDxo>(); 
             services.AddTransient<XmlTransactionDxo>();

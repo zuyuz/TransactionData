@@ -19,7 +19,7 @@ namespace TransactionData.Domain.Commands
         public GetTransactionQuery(string currency = null, 
             DateTimeOffset? from = null,
             DateTimeOffset? to = null,
-            GetTransactionStatusEnumQuery? status = null)
+            List<GetTransactionStatusEnumQuery> status = null)
         {
             Currency = currency;
             From = from;
@@ -30,6 +30,6 @@ namespace TransactionData.Domain.Commands
         public string Currency { get; set; }
         public DateTimeOffset? From { get; set; }
         public DateTimeOffset? To { get; set; }
-        public GetTransactionStatusEnumQuery? Status { get; set; }
+        public List<GetTransactionStatusEnumQuery> Status { get; set; }
     }
 }

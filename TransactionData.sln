@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionData.Data.Entiti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionData.IoC", "TransactionData.IoC\TransactionData.IoC.csproj", "{95BEDFE7-5DD2-45F0-A5EF-CBC1EC930E1E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionData.Data.MSSql", "TransactionData.Data.MSSql\TransactionData.Data.MSSql.csproj", "{60EDF36D-31B6-40AA-A425-03F7CE0EDC6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionData.Data.Sqlite", "TransactionData.Data.Sqlite\TransactionData.Data.Sqlite.csproj", "{8900704E-A5F9-4F89-9342-66BC1E7DCF1A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +55,14 @@ Global
 		{95BEDFE7-5DD2-45F0-A5EF-CBC1EC930E1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95BEDFE7-5DD2-45F0-A5EF-CBC1EC930E1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95BEDFE7-5DD2-45F0-A5EF-CBC1EC930E1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60EDF36D-31B6-40AA-A425-03F7CE0EDC6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60EDF36D-31B6-40AA-A425-03F7CE0EDC6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60EDF36D-31B6-40AA-A425-03F7CE0EDC6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60EDF36D-31B6-40AA-A425-03F7CE0EDC6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8900704E-A5F9-4F89-9342-66BC1E7DCF1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8900704E-A5F9-4F89-9342-66BC1E7DCF1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8900704E-A5F9-4F89-9342-66BC1E7DCF1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8900704E-A5F9-4F89-9342-66BC1E7DCF1A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -36,7 +36,7 @@ namespace TransactionData.Service.Handlers.QueryHandlers
                         (request.Currency == null || request.Currency == transaction.CurrencyCode)
                         && (!request.To.HasValue || request.To.Value >= transaction.TransactionDate)
                         && (!request.From.HasValue || request.From.Value <= transaction.TransactionDate)
-                        && (!request.Status.HasValue || request.Status.Value.HasFlag(transaction.Status)))
+                        && (request.Status == null || request.Status.Contains((GetTransactionStatusEnumQuery) transaction.Status)))
                     .ToListAsync(cancellationToken: cancellationToken);
 
                 return _transactionDxo.MapTransaction(transactions)

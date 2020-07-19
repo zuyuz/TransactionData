@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace TransactionData.Data.Migrations
+namespace TransactionData.Data.MSSql.Migrations
 {
     public partial class AddedTransaction : Migration
     {

@@ -16,7 +16,9 @@ namespace TransactionData.Service.Dxos
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<Transaction, GetTransactionDto>();
+                cfg.CreateMap<Transaction, GetTransactionDto>()
+                    .ForMember(dto => dto.AmountAndCurrencyCode, 
+                        m => m.MapFrom(transaction => $"{transaction.Amount} {transaction.CurrencyCode}"));
             });
 
             _mapper = config.CreateMapper();
