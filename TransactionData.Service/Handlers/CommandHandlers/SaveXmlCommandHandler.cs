@@ -13,63 +13,50 @@ using MediatR;
 using TransactionData.Data.Entities.Entities;
 using TransactionData.Data.Interfaces.Interfaces;
 using TransactionData.Domain.Commands;
-using TransactionData.Domain.ExtensionMethods;
+using TransactionData.Domain.Events;
 using TransactionData.Domain.Models;
 using TransactionData.Service.CsvMap;
 using TransactionData.Service.Dxos;
+using TransactionData.Service.ExtensionMethods;
 
 namespace TransactionData.Service.Services
 {
-    public class SaveXmlCommandHandler : IRequestHandler<SaveXmlCommand, Result<Unit, string>>
+    public class SaveXmlCommandHandler : IRequestHandler<SaveXmlCommand, Result<Unit>>
     {
         private readonly ITransactionRepository _transactionRepository;
         private readonly XmlTransactionDxo _xmlTransactionDxo;
+        private readonly IMediator _mediator;
 
         public SaveXmlCommandHandler(ITransactionRepository transactionRepository,
-            XmlTransactionDxo xmlTransactionDxo)
+            XmlTransactionDxo xmlTransactionDxo,
+            IMediator mediator)
         {
             _transactionRepository = transactionRepository;
             _xmlTransactionDxo = xmlTransactionDxo;
+            _mediator = mediator;
         }
 
-        public async Task<Result<Unit, string>> Handle(SaveXmlCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Unit>> Handle(SaveXmlCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                using TextReader reader = new StreamReader(request.Stream);
-                XmlSerializer serializer = new XmlSerializer(typeof(XmlTransactionModel));
-                var xmlTransactions = (XmlTransactionModel) serializer.Deserialize(reader);
-
-
-                return await (await _xmlTransactionDxo.MapTransaction(xmlTransactions)
-                    .Bind(async transactions =>
-                    {
-                        var result = await _transactionRepository.CreateAsync(transactions);
-                        return result.Bind(list => Result.Success(Unit.Value));
-                    }))
-                    .Match(async r =>
+                return await request.GetXmlTransactionModel()
+                    .Bind(xmlTransactionModel => _xmlTransactionDxo.MapTransaction(xmlTransactionModel)
+                        .Bind(async transactions =>
                         {
-                            var result = await _transactionRepository.SaveAsync();
-                            return result.Bind(Result.Success<Unit, string>);
-                        }, 
-                        s1 => Task.FromResult(Result.Failure<Unit, string>(s1)));
+                            var result = await _transactionRepository.CreateAsync(transactions);
+                            return result.Bind(list => Result.Success(Unit.Value));
+                        })
+                        .Bind(async transactions => await _transactionRepository.SaveAsync()))
+                    .OnFailure(error =>
+                        _mediator.Publish(SaveXmlFailedEvent.CreateInstance(error), cancellationToken));
                 
-            }
-            catch (UnauthorizedAccessException e)
-            {
-                return Result.Failure<Unit, string>(e.Message);
-            }
-            catch (FieldValidationException e)
-            {
-                return Result.Failure<Unit, string>(e.Message);
-            }
-            catch (CsvHelperException e)
-            {
-                return Result.Failure<Unit, string>(e.Message);
             }
             catch (Exception e)
             {
-                return Result.Failure<Unit, string>(e.Message);
+                await _mediator.Publish(SaveXmlFailedEvent.CreateInstance(e.Message), cancellationToken);
+
+                return Result.Failure<Unit>(e.Message);
             }
         }
     }

@@ -11,7 +11,7 @@ using TransactionData.Data.Interfaces.Interfaces;
 using TransactionData.Domain.Commands;
 using TransactionData.Domain.Dtos;
 using TransactionData.Service.Dxos;
-using TransactionData.Domain.ExtensionMethods;
+using TransactionData.Service.ExtensionMethods;
 
 namespace TransactionData.Service.Handlers.QueryHandlers
 {

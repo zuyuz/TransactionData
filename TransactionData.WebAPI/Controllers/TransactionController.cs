@@ -35,9 +35,11 @@ namespace TransactionData.WebAPI.Controllers
         [ProducesResponseType(400)]
         public async Task<IActionResult> SaveCsv(IFormFile formFile)
         {
-            var stream = formFile.OpenReadStream();
-            var a = (await CommandAsync(SaveCsvCommand.CreateInstance(stream)));
-            return a.Match<Unit, IActionResult, string>(unit => Ok(), BadRequest);
+            if (formFile == null)
+                return NoContent();
+
+            return (await CommandAsync(SaveCsvCommand.CreateInstance(formFile.OpenReadStream())))
+                .Match<IActionResult, Unit>(unit => Ok(), BadRequest);
         }
 
         [HttpPost]
@@ -46,9 +48,11 @@ namespace TransactionData.WebAPI.Controllers
         [ProducesResponseType(400)]
         public async Task<IActionResult> SaveXml(IFormFile formFile)
         {
-            var stream = formFile.OpenReadStream();
-            var a = (await CommandAsync(SaveXmlCommand.CreateInstance(stream)));
-            return a.Match<Unit, IActionResult, string>(unit => Ok(), BadRequest);
+            if (formFile == null)
+                return NoContent();
+
+            return (await CommandAsync(SaveXmlCommand.CreateInstance(formFile.OpenReadStream())))
+                .Match<IActionResult, Unit>(unit => Ok(), BadRequest);
         }
     }
 }

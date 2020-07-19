@@ -4,7 +4,7 @@ using MediatR;
 
 namespace TransactionData.Domain.Commands
 {
-    public class SaveXmlCommand : IRequest<Result<Unit, string>>
+    public class SaveXmlCommand : IRequest<Result<Unit>>
     {
         public SaveXmlCommand(Stream stream)
         {
