@@ -1,5 +1,6 @@
-# TransactionData sample application
-<br/>
+# TransactionData application
+
+![.NET Core](https://github.com/zuyuz/TransactionData/workflows/.NET%20Core/badge.svg?branch=master)
 
 This solution demonstrates how to create API, that accepts XML and CSV data files, containing simple "transaction" model, records and query to the data store, while logging all possible exceptions on the way.
 
