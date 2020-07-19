@@ -22,7 +22,7 @@ namespace TransactionData.Service.ExtensionMethods
             }
             catch (Exception e)
             {
-                return Result.Failure<XmlTransactionModel>(e.InnerException?.Message ?? e.Message);
+                return Result.Failure<XmlTransactionModel>($"XML import failed with message:\n{e.InnerException?.Message ?? string.Empty} {e.Message}");
             }
         }
     }

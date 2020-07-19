@@ -37,7 +37,7 @@ namespace TransactionData.Service.ExtensionMethods
                 }
 
                 if (badRows.Any())
-                    return Result.Failure<List<CsvTransactionModel>>(badRows.Aggregate("",
+                    return Result.Failure<List<CsvTransactionModel>>(badRows.Aggregate("CSV import failed with message:\n",
                         (first, second) => $"{first}{second}\n"));
 
                 return goodRows;
