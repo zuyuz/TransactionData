@@ -5,10 +5,11 @@ using AutoMapper;
 using CSharpFunctionalExtensions;
 using TransactionData.Data.Entities.Entities;
 using TransactionData.Domain.Models;
+using TransactionData.Service.Interfaces.Dxos;
 
 namespace TransactionData.Service.Dxos
 {
-    public class CsvTransactionDxo
+    public class CsvTransactionDxo : ICsvTransactionDxo
     {
         private readonly IMapper _mapper;
 

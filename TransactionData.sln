@@ -11,15 +11,33 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionData.Service", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionData.Data", "TransactionData.Data\TransactionData.Data.csproj", "{75740448-3D0A-49BE-91FF-B0D7030A4ECF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionData.Data.Interfaces", "TransactionData.Data.Interfaces\TransactionData.Data.Interfaces.csproj", "{C8AED0FD-7C65-4DA5-9854-175108A41B79}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionData.Data.Interfaces", "TransactionData.Data.Interfaces\TransactionData.Data.Interfaces.csproj", "{C8AED0FD-7C65-4DA5-9854-175108A41B79}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionData.Data.Entities", "TransactionData.Data.Entities\TransactionData.Data.Entities.csproj", "{C174E839-D427-4C49-8771-576C45166559}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionData.Data.Entities", "TransactionData.Data.Entities\TransactionData.Data.Entities.csproj", "{C174E839-D427-4C49-8771-576C45166559}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionData.IoC", "TransactionData.IoC\TransactionData.IoC.csproj", "{95BEDFE7-5DD2-45F0-A5EF-CBC1EC930E1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionData.IoC", "TransactionData.IoC\TransactionData.IoC.csproj", "{95BEDFE7-5DD2-45F0-A5EF-CBC1EC930E1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionData.Data.MSSql", "TransactionData.Data.MSSql\TransactionData.Data.MSSql.csproj", "{60EDF36D-31B6-40AA-A425-03F7CE0EDC6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionData.Data.MSSql", "TransactionData.Data.MSSql\TransactionData.Data.MSSql.csproj", "{60EDF36D-31B6-40AA-A425-03F7CE0EDC6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionData.Data.Sqlite", "TransactionData.Data.Sqlite\TransactionData.Data.Sqlite.csproj", "{8900704E-A5F9-4F89-9342-66BC1E7DCF1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionData.Data.Sqlite", "TransactionData.Data.Sqlite\TransactionData.Data.Sqlite.csproj", "{8900704E-A5F9-4F89-9342-66BC1E7DCF1A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Outer Layer", "Outer Layer", "{0252748E-E5A5-4752-9ED4-E9652398B5AB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application Infrastructure", "Application Infrastructure", "{D144A53E-8910-4BA7-BC2C-C021AA136B82}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application Core", "Application Core", "{4D15A6E9-1871-4C80-B608-FE045D0082F8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{DEADC195-8451-476D-8899-14BD319F1B73}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{7E4F559E-11CD-41D0-901F-046AA5DECA39}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7C4BB3B0-CF17-4A40-9582-20A0B580113E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionData.UnitTests", "TransactionData.UnitTests\TransactionData.UnitTests.csproj", "{EF904A6C-B58B-46FA-A005-84A1E48B33B8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{A7D2AB88-7468-4337-A4AB-390DEDBB90E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionData.Service.Interfaces", "TransactionData.Service.Interfaces\TransactionData.Service.Interfaces.csproj", "{2AA63925-2BD0-46C6-9B9D-EFFFE137BA6A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,9 +81,33 @@ Global
 		{8900704E-A5F9-4F89-9342-66BC1E7DCF1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8900704E-A5F9-4F89-9342-66BC1E7DCF1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8900704E-A5F9-4F89-9342-66BC1E7DCF1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF904A6C-B58B-46FA-A005-84A1E48B33B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF904A6C-B58B-46FA-A005-84A1E48B33B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF904A6C-B58B-46FA-A005-84A1E48B33B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF904A6C-B58B-46FA-A005-84A1E48B33B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AA63925-2BD0-46C6-9B9D-EFFFE137BA6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AA63925-2BD0-46C6-9B9D-EFFFE137BA6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AA63925-2BD0-46C6-9B9D-EFFFE137BA6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AA63925-2BD0-46C6-9B9D-EFFFE137BA6A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{974ABE1E-6E63-4D4C-BB06-8A6F4EAC227B} = {0252748E-E5A5-4752-9ED4-E9652398B5AB}
+		{C1B978A4-3003-46A5-B523-446EA844B8B7} = {DEADC195-8451-476D-8899-14BD319F1B73}
+		{3DC2747E-B946-434A-BE62-81C5D092935B} = {D144A53E-8910-4BA7-BC2C-C021AA136B82}
+		{75740448-3D0A-49BE-91FF-B0D7030A4ECF} = {7E4F559E-11CD-41D0-901F-046AA5DECA39}
+		{C8AED0FD-7C65-4DA5-9854-175108A41B79} = {7E4F559E-11CD-41D0-901F-046AA5DECA39}
+		{C174E839-D427-4C49-8771-576C45166559} = {7E4F559E-11CD-41D0-901F-046AA5DECA39}
+		{95BEDFE7-5DD2-45F0-A5EF-CBC1EC930E1E} = {D144A53E-8910-4BA7-BC2C-C021AA136B82}
+		{60EDF36D-31B6-40AA-A425-03F7CE0EDC6B} = {7E4F559E-11CD-41D0-901F-046AA5DECA39}
+		{8900704E-A5F9-4F89-9342-66BC1E7DCF1A} = {7E4F559E-11CD-41D0-901F-046AA5DECA39}
+		{DEADC195-8451-476D-8899-14BD319F1B73} = {4D15A6E9-1871-4C80-B608-FE045D0082F8}
+		{7E4F559E-11CD-41D0-901F-046AA5DECA39} = {D144A53E-8910-4BA7-BC2C-C021AA136B82}
+		{EF904A6C-B58B-46FA-A005-84A1E48B33B8} = {7C4BB3B0-CF17-4A40-9582-20A0B580113E}
+		{A7D2AB88-7468-4337-A4AB-390DEDBB90E5} = {4D15A6E9-1871-4C80-B608-FE045D0082F8}
+		{2AA63925-2BD0-46C6-9B9D-EFFFE137BA6A} = {A7D2AB88-7468-4337-A4AB-390DEDBB90E5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {42E1B517-A4D4-438B-91FE-5357D76F8FED}

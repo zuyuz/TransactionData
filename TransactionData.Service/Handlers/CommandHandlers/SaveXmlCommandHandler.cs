@@ -18,29 +18,34 @@ using TransactionData.Domain.Models;
 using TransactionData.Service.CsvMap;
 using TransactionData.Service.Dxos;
 using TransactionData.Service.ExtensionMethods;
+using TransactionData.Service.Interfaces.Dxos;
+using TransactionData.Service.Interfaces.Services;
 
 namespace TransactionData.Service.Services
 {
     public class SaveXmlCommandHandler : IRequestHandler<SaveXmlCommand, Result<Unit>>
     {
         private readonly ITransactionRepository _transactionRepository;
-        private readonly XmlTransactionDxo _xmlTransactionDxo;
+        private readonly IXmlTransactionDxo _xmlTransactionDxo;
         private readonly IMediator _mediator;
+        private readonly IXmlTransactionService _xmlTransactionService;
 
         public SaveXmlCommandHandler(ITransactionRepository transactionRepository,
-            XmlTransactionDxo xmlTransactionDxo,
-            IMediator mediator)
+            IXmlTransactionDxo xmlTransactionDxo,
+            IMediator mediator,
+            IXmlTransactionService xmlTransactionService)
         {
             _transactionRepository = transactionRepository;
             _xmlTransactionDxo = xmlTransactionDxo;
             _mediator = mediator;
+            _xmlTransactionService = xmlTransactionService;
         }
 
         public async Task<Result<Unit>> Handle(SaveXmlCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                return await request.GetXmlTransactionModel()
+                return await _xmlTransactionService.GetXmlTransactionModel(request)
                     .Bind(xmlTransactionModel => _xmlTransactionDxo.MapTransaction(xmlTransactionModel))
                     .Bind(async transactions =>
                     {

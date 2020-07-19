@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TransactionData.Data.Interfaces\TransactionData.Data.Interfaces.csproj" />
     <ProjectReference Include="..\TransactionData.Domain\TransactionData.Domain.csproj" />
+    <ProjectReference Include="..\TransactionData.Service.Interfaces\TransactionData.Service.Interfaces.csproj" />
   </ItemGroup>
 
 </Project>

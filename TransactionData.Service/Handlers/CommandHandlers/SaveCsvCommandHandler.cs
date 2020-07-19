@@ -17,29 +17,34 @@ using TransactionData.Domain.Models;
 using TransactionData.Service.CsvMap;
 using TransactionData.Service.Dxos;
 using TransactionData.Service.ExtensionMethods;
+using TransactionData.Service.Interfaces.Dxos;
+using TransactionData.Service.Interfaces.Services;
 
 namespace TransactionData.Service.Services
 {
     public class SaveCsvCommandHandler : IRequestHandler<SaveCsvCommand, Result<Unit>>
     {
         private readonly ITransactionRepository _transactionRepository;
-        private readonly CsvTransactionDxo _csvTransactionDxo;
+        private readonly ICsvTransactionDxo _csvTransactionDxo;
         private readonly IMediator _mediator;
+        private readonly ICsvTransactionService _csvTransactionService;
 
         public SaveCsvCommandHandler(ITransactionRepository transactionRepository,
-            CsvTransactionDxo csvTransactionDxo,
-            IMediator mediator)
+            ICsvTransactionDxo csvTransactionDxo,
+            IMediator mediator,
+            ICsvTransactionService csvTransactionService)
         {
             _transactionRepository = transactionRepository;
             _csvTransactionDxo = csvTransactionDxo;
             _mediator = mediator;
+            _csvTransactionService = csvTransactionService;
         }
 
         public async Task<Result<Unit>> Handle(SaveCsvCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                return await request.GetCsvTransactionModel()
+                return await _csvTransactionService.GetCsvTransactionModel(request)
                     .Bind(csvTransactionModel => _csvTransactionDxo.MapTransaction(csvTransactionModel))
                     .Bind(async transactions =>
                     {

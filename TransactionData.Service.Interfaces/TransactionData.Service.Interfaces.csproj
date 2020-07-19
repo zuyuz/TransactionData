@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CSharpFunctionalExtensions" Version="2.10.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TransactionData.Data.Entities\TransactionData.Data.Entities.csproj" />
+    <ProjectReference Include="..\TransactionData.Domain\TransactionData.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

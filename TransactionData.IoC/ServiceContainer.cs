@@ -7,6 +7,9 @@ using TransactionData.Data;
 using TransactionData.Data.Interfaces.Interfaces;
 using TransactionData.Data.Repositories;
 using TransactionData.Service.Dxos;
+using TransactionData.Service.Interfaces.Dxos;
+using TransactionData.Service.Interfaces.Services;
+using TransactionData.Service.Services;
 
 namespace TransactionData.IoC
 {
@@ -19,9 +22,13 @@ namespace TransactionData.IoC
             services.AddDbContext<TransactionDataContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("TransactionData.Data.MSSql")));
 
-            services.AddTransient<CsvTransactionDxo>(); 
-            services.AddTransient<XmlTransactionDxo>();
+            services.AddTransient<ICsvTransactionDxo, CsvTransactionDxo>(); 
+            services.AddTransient<IXmlTransactionDxo, XmlTransactionDxo>();
             services.AddTransient<TransactionDxo>();
+
+
+            services.AddTransient<ICsvTransactionService, CsvTransactionService>();
+            services.AddTransient<IXmlTransactionService, XmlTransactionService>();
 
             services.AddTransient<ITransactionRepository, TransactionRepository>();
         }
