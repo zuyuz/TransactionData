@@ -1,6 +1,7 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using LanguageExt;
 using MediatR;
 using Moq;
 using TransactionData.Data.Interfaces.Interfaces;
@@ -41,7 +42,7 @@ namespace TransactionData.UnitTests.Service.Handlers.CommandHandlers
 
             #region Assert
 
-            Assert.True(Result.IsSuccess);
+            Assert.False(Result.IsDefault());
 
             #endregion
         }
