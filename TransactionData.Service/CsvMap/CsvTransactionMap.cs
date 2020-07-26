@@ -10,7 +10,7 @@ namespace TransactionData.Service.CsvMap
         {
             Map(m => m.Id).Name(CsvHeaders.Id);
             Map(m => m.Amount).Name(CsvHeaders.Amount);
-            Map(m => m.CurrencyCode).Name(CsvHeaders.CurrencyCode);
+            Map(m => m.CurrencyCode).Validate(field => !field.Contains("-")).Name(CsvHeaders.CurrencyCode);
             Map(m => m.Status).Name(CsvHeaders.Status);
             Map(m => m.TransactionDate).Name(CsvHeaders.TransactionDate);
         }

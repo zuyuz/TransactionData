@@ -1,4 +1,4 @@
-﻿using CSharpFunctionalExtensions;
+﻿using LanguageExt;
 using TransactionData.Domain.Commands;
 using TransactionData.Domain.Models;
 using TransactionData.Service.ExtensionMethods;
@@ -8,7 +8,7 @@ namespace TransactionData.Service.Services
 {
     public class XmlTransactionService : IXmlTransactionService
     {
-        public Result<XmlTransactionModel> GetXmlTransactionModel(SaveXmlCommand command)
+        public TryAsync<XmlTransactionModel> GetXmlTransactionModel(SaveXmlCommand command)
         {
             return command.GetXmlTransactionModel();
         }

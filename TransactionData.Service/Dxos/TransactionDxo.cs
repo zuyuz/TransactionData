@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using AutoMapper;
-using CSharpFunctionalExtensions;
+using LanguageExt;
+using LanguageExt.Common;
 using TransactionData.Data.Entities.Entities;
 using TransactionData.Domain.Dtos;
 using TransactionData.Domain.Models;
 using TransactionData.Service.Interfaces.Dxos;
+using static LanguageExt.Prelude;
+using Unit = LanguageExt.Unit;
 
 namespace TransactionData.Service.Dxos
 {
@@ -25,16 +28,9 @@ namespace TransactionData.Service.Dxos
             _mapper = config.CreateMapper();
         }
 
-        public Result<List<GetTransactionDto>> MapTransaction(IList<Transaction> model)
+        public TryAsync<List<GetTransactionDto>> MapTransaction(IList<Transaction> model)
         {
-            try
-            {
-                return Result.Success(_mapper.Map<List<GetTransactionDto>>(model));
-            }
-            catch (Exception e)
-            {
-                return Result.Failure<List<GetTransactionDto>>(e.InnerException?.Message ?? e.Message);
-            }
+            return TryAsync(() => _mapper.Map<List<GetTransactionDto>>(model).AsTask());
         }
     }
 }

@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CSharpFunctionalExtensions;
-using MediatR;
+using LanguageExt;
+using LanguageExt.Common;
 using Microsoft.EntityFrameworkCore;
 using TransactionData.Data.Interfaces.Interfaces;
+using static LanguageExt.Prelude;
+using Unit = LanguageExt.Unit;
 
 namespace TransactionData.Data.Repositories
 {
@@ -20,69 +23,45 @@ namespace TransactionData.Data.Repositories
             Context = context;
         }
 
-        public virtual async Task<Result<TEntity>> CreateAsync(TEntity entity)
+        public virtual TryAsync<TEntity> CreateAsync(TEntity entity)
         {
-            try
+            return TryAsync(async () =>
             {
                 await Context.Set<TEntity>().AddAsync(entity);
-                return Result.Success(entity);
-            }
-            catch (Exception e)
-            {
-                return Result.Failure<TEntity>(e.InnerException?.Message ?? e.Message);
-            }
+                return entity;
+            });
         }
 
-        public async Task<Result<IList<TEntity>>> CreateAsync(IList<TEntity> entity)
+        public virtual TryAsync<List<TEntity>> CreateAsync(List<TEntity> entity)
         {
-            try
+            return TryAsync(async () =>
             {
                 await Context.Set<TEntity>().AddRangeAsync(entity);
-                return Result.Success(entity);
-            }
-            catch (Exception e)
-            {
-                return Result.Failure<IList<TEntity>>(e.InnerException?.Message ?? e.Message);
-            }
+                return entity;
+            });
         }
 
-        public virtual Task<Result<TEntity>> DeleteAsync(TEntity entity)
+        public virtual TryAsync<TEntity> DeleteAsync(TEntity entity)
         {
-            try
+            return TryAsync(async () =>
             {
                 Context.Set<TEntity>().Remove(entity);
-                return Task.FromResult(Result.Success(entity));
-            }
-            catch (Exception e)
-            {
-                return Task.FromResult(Result.Failure<TEntity>(e.InnerException?.Message ?? e.Message));
-            }
+                return entity;
+            });
         }
 
-        public virtual Task<Result<TEntity>> UpdateAsync(TEntity entity)
+        public virtual TryAsync<TEntity> UpdateAsync(TEntity entity)
         {
-            try
+            return TryAsync(async () =>
             {
                 Context.Entry(entity).State = EntityState.Modified;
-                return Task.FromResult(Result.Success(entity));
-            }
-            catch (Exception e)
-            {
-                return Task.FromResult(Result.Failure<TEntity>(e.InnerException?.Message ?? e.Message));
-            }
+                return entity;
+            });
         }
 
-        public virtual async Task<Result<Unit>> SaveAsync()
+        public virtual TryAsync<Unit> SaveAsync()
         {
-            try
-            {
-                await Context.SaveChangesAsync();
-                return Result.Success(Unit.Value);
-            }
-            catch (Exception e)
-            {
-                return Result.Failure<Unit>(e.InnerException?.Message ?? e.Message);
-            }
+            return TryAsync(async () => await Context.SaveChangesAsync().ToUnit());
         }
     }
 }

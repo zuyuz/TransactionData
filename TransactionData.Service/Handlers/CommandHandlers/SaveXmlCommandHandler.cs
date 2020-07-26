@@ -7,8 +7,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using CSharpFunctionalExtensions;
 using CsvHelper;
+using LanguageExt;
+using LanguageExt.Common;
 using MediatR;
 using TransactionData.Data.Entities.Entities;
 using TransactionData.Data.Interfaces.Interfaces;
@@ -20,10 +21,12 @@ using TransactionData.Service.Dxos;
 using TransactionData.Service.ExtensionMethods;
 using TransactionData.Service.Interfaces.Dxos;
 using TransactionData.Service.Interfaces.Services;
+using static LanguageExt.Prelude;
+using Unit = LanguageExt.Unit;
 
 namespace TransactionData.Service.Services
 {
-    public class SaveXmlCommandHandler : IRequestHandler<SaveXmlCommand, Result<Unit>>
+    public class SaveXmlCommandHandler : IRequestHandler<SaveXmlCommand, EitherAsync<Error, Unit>>
     {
         private readonly ITransactionRepository _transactionRepository;
         private readonly IXmlTransactionDxo _xmlTransactionDxo;
@@ -41,28 +44,19 @@ namespace TransactionData.Service.Services
             _xmlTransactionService = xmlTransactionService;
         }
 
-        public async Task<Result<Unit>> Handle(SaveXmlCommand request, CancellationToken cancellationToken)
+        public Task<EitherAsync<Error, Unit>> Handle(SaveXmlCommand request, CancellationToken cancellationToken)
         {
-            try
-            {
-                return await _xmlTransactionService.GetXmlTransactionModel(request)
-                    .Bind(xmlTransactionModel => _xmlTransactionDxo.MapTransaction(xmlTransactionModel))
-                    .Bind(async transactions =>
+            return _xmlTransactionService.GetXmlTransactionModel(request)
+                .Bind(xmlTransactionModel => _xmlTransactionDxo.MapTransaction(xmlTransactionModel))
+                .Bind(transactions =>  _transactionRepository.CreateAsync(transactions))
+                .Bind(transactions => _transactionRepository.SaveAsync())
+                .Match(EitherAsync<Error, Unit>.Right,
+                    error =>
                     {
-                        var result = await _transactionRepository.CreateAsync(transactions);
-                        return result.Bind(Result.Success);
-                    })
-                    .Bind(async transactions => await _transactionRepository.SaveAsync())
-                    .OnFailure(error =>
-                        _mediator.Publish(SaveXmlFailedEvent.CreateInstance(error), cancellationToken));
-                
-            }
-            catch (Exception e)
-            {
-                await _mediator.Publish(SaveXmlFailedEvent.CreateInstance(e.Message), cancellationToken);
-
-                return Result.Failure<Unit>(e.InnerException?.Message ?? e.Message);
-            }
+                        _mediator.Publish(SaveXmlFailedEvent.CreateInstance(error.Message),
+                            cancellationToken).ToUnit();
+                        return EitherAsync<Error, Unit>.Left(error);
+                    });
         }
     }
 }

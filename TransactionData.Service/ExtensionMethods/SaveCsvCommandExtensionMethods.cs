@@ -3,25 +3,28 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using CSharpFunctionalExtensions;
 using CsvHelper;
+using LanguageExt;
+using LanguageExt.Common;
 using Microsoft.Extensions.Logging;
 using TransactionData.Domain.Commands;
 using TransactionData.Domain.Models;
 using TransactionData.Service.CsvMap;
+using static LanguageExt.Prelude;
+using Unit = LanguageExt.Unit;
 
 namespace TransactionData.Service.ExtensionMethods
 {
     public static class SaveCsvCommandExtensionMethods
     {
-        public static Result<List<CsvTransactionModel>> GetCsvTransactionModel(this SaveCsvCommand command)
+        public static TryAsync<List<CsvTransactionModel>> GetCsvTransactionModel(this SaveCsvCommand command)
         {
-            try
+            return TryAsync(() =>
             {
                 using TextReader reader = new StreamReader(command.Stream);
                 using var csv = new CsvReader(reader, CultureInfo.CurrentCulture);
                 var goodRows = new List<CsvTransactionModel>();
-                var badRows = new List<string>(); 
+                var badRows = new List<string>();
                 csv.Configuration.RegisterClassMap<CsvTransactionMap>();
                 while (csv.Read())
                 {
@@ -37,27 +40,11 @@ namespace TransactionData.Service.ExtensionMethods
                 }
 
                 if (badRows.Any())
-                    return Result.Failure<List<CsvTransactionModel>>(badRows.Aggregate("CSV import failed with message:\n",
+                    throw new ArgumentException(badRows.Aggregate("CSV import failed with message:\n",
                         (first, second) => $"{first}{second}\n"));
 
-                return goodRows;
-            }
-            catch (UnauthorizedAccessException e)
-            {
-                return Result.Failure<List<CsvTransactionModel>>(e.InnerException?.Message ?? e.Message);
-            }
-            catch (FieldValidationException e)
-            {
-                return Result.Failure<List<CsvTransactionModel>>(e.InnerException?.Message ?? e.Message);
-            }
-            catch (CsvHelperException e)
-            {
-                return Result.Failure<List<CsvTransactionModel>>(e.InnerException?.Message ?? e.Message);
-            }
-            catch (Exception e)
-            {
-                return Result.Failure<List<CsvTransactionModel>>(e.InnerException?.Message ?? e.Message);
-            }
+                return goodRows.AsTask();
+            });
         }
     }
 }

@@ -8,8 +8,8 @@ namespace TransactionData.Data
     public class TransactionDataContext : DbContext
     {
         public DbSet<Transaction> Transactions { get; set; }
-        public TransactionDataContext(DbContextOptions<TransactionDataContext> options)
-            : base(options)
+        public TransactionDataContext(DbContextOptions<TransactionDataContext> Results)
+            : base(Results)
         { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

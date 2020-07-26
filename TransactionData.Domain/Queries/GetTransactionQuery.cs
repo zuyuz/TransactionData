@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using CSharpFunctionalExtensions;
+using LanguageExt;
 using MediatR;
 using TransactionData.Domain.Dtos;
 
 namespace TransactionData.Domain.Commands
 {
-    public class GetTransactionQuery : IRequest<Result<List<GetTransactionDto>, string>>
+    public class GetTransactionQuery : IRequest<TryAsync<List<GetTransactionDto>>>
     {
         public GetTransactionQuery()
         {

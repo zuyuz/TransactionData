@@ -6,6 +6,7 @@ using Moq;
 using TransactionData.Data.Interfaces.Interfaces;
 using TransactionData.Domain.Commands;
 using TransactionData.Service.Dxos;
+using TransactionData.Service.Handlers.CommandHandlers;
 using TransactionData.Service.Interfaces.Services;
 using TransactionData.Service.Services;
 using Xunit;
@@ -34,13 +35,13 @@ namespace TransactionData.UnitTests.Service.Handlers.CommandHandlers
                 csvTransactionDxoMock.Object,
                 mediatorMock.Object,
                 csvTransactionServiceMock.Object);
-            var result = await sut.Handle(saveCsvCommand, CancellationToken.None);
+            var Result = await sut.Handle(saveCsvCommand, CancellationToken.None);
 
             #endregion
 
             #region Assert
 
-            Assert.True(result.IsSuccess);
+            Assert.True(Result.IsSuccess);
 
             #endregion
         }

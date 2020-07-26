@@ -39,14 +39,14 @@ namespace TransactionData.WebAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Transaction API", Version = "v1" });
             });
             services.AddControllers()
-                .AddNewtonsoftJson(options =>
+                .AddNewtonsoftJson(Results =>
             {
-                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                options.SerializerSettings.DateFormatHandling = DateFormatHandling.IsoDateFormat;
-                options.SerializerSettings.DateParseHandling = DateParseHandling.None;
-                options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
-                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                options.SerializerSettings.Converters.Add(new MultiFormatDateConverter
+                Results.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                Results.SerializerSettings.DateFormatHandling = DateFormatHandling.IsoDateFormat;
+                Results.SerializerSettings.DateParseHandling = DateParseHandling.None;
+                Results.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
+                Results.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                Results.SerializerSettings.Converters.Add(new MultiFormatDateConverter
                 {
                     DateTimeFormats = new List<string>()
                     {

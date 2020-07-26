@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using CSharpFunctionalExtensions;
+using LanguageExt;
+using LanguageExt.Common;
+using LanguageExt.SomeHelp;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TransactionData.Domain.Commands;
 using TransactionData.Domain.Dtos;
+using static LanguageExt.Prelude;
+using Unit = LanguageExt.Unit;
 
 namespace TransactionData.WebAPI.Controllers
 {
@@ -23,10 +28,16 @@ namespace TransactionData.WebAPI.Controllers
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> GetTransactions([FromBody] GetTransactionQuery query)
+        public Task<IActionResult> GetTransactions([FromBody] GetTransactionQuery query)
         {
-            var a = await QueryAsync(query);
-            return a.Match<List<GetTransactionDto>, IActionResult, string>(dto => Ok(dto), dto => BadRequest(dto));
+            return TryOptionAsync(query
+                    .Apply(file => QueryAsync(query)))
+                    .MapT(Ok)
+                    .Match(Some: (some) =>
+                    {
+                        return some.Match(unit1 => unit1, error => (IActionResult)BadRequest(error));
+                    }, None: () => ((IActionResult)BadRequest("Unknown format")).AsTask(), Fail: (error) => ((IActionResult)BadRequest(error.Message)).AsTask())
+                    .Bind(task => task);
         }
 
         /// <summary>
@@ -44,13 +55,19 @@ namespace TransactionData.WebAPI.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(422)]
         [RequestSizeLimit(1000000)]
-        public async Task<IActionResult> SaveCsv(IFormFile formFile)
+        public Task<IActionResult> SaveCsv(IFormFile formFile)
         {
-            if (formFile == null || formFile.ContentType != "application/vnd.ms-excel")
-                return UnprocessableEntity("Unknown format");
-
-            return (await CommandAsync(SaveCsvCommand.CreateInstance(formFile.OpenReadStream())))
-                .Match<IActionResult, Unit>(unit => Ok(), BadRequest);
+            return TryOptionAsync(formFile
+                .ToSome()
+                .Filter(file => file.ContentType != "application/vnd.ms-excel")
+                .Reduce((file, file1) => file)
+                .Apply(file => CommandAsync(SaveCsvCommand.CreateInstance(file.OpenReadStream()))
+                .MapT(unit1 => Ok())))
+                .Match(Some: (some) =>
+                {
+                    return some.Match(unit1 => unit1, error => (IActionResult) BadRequest(error));
+                }, None: () => ((IActionResult) UnprocessableEntity("Unknown format")).AsTask(), Fail: (error) => ((IActionResult) BadRequest(error.Message)).AsTask())
+                .Bind(task => task);
         }
 
         /// <summary>
@@ -68,13 +85,19 @@ namespace TransactionData.WebAPI.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(422)]
         [RequestSizeLimit(1000000)]
-        public async Task<IActionResult> SaveXml(IFormFile formFile)
+        public Task<IActionResult> SaveXml(IFormFile formFile)
         {
-            if (formFile == null || formFile.ContentType != "text/xml")
-                return UnprocessableEntity("Unknown format");
-
-            return (await CommandAsync(SaveXmlCommand.CreateInstance(formFile.OpenReadStream())))
-                .Match<IActionResult, Unit>(unit => Ok(), BadRequest);
+            return TryOptionAsync(formFile
+                    .ToSome()
+                    .Filter(file => file.ContentType != "text/xml")
+                    .Reduce((file, file1) => file)
+                    .Apply(file => CommandAsync(SaveXmlCommand.CreateInstance(file.OpenReadStream()))))
+                .MapT(unit1 => Ok())
+                .Match(Some: (some) =>
+                {
+                    return some.Match(unit1 => unit1, error => (IActionResult)BadRequest(error));
+                }, None: () => ((IActionResult)UnprocessableEntity("Unknown format")).AsTask(), Fail: (error) => ((IActionResult)BadRequest(error.Message)).AsTask())
+                .Bind(task => task);
         }
     }
 }

@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using CSharpFunctionalExtensions;
+using LanguageExt;
+using LanguageExt.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TransactionData.Data.Interfaces.Interfaces;
@@ -13,10 +14,12 @@ using TransactionData.Domain.Dtos;
 using TransactionData.Service.Dxos;
 using TransactionData.Service.ExtensionMethods;
 using TransactionData.Service.Interfaces.Dxos;
+using static LanguageExt.Prelude;
+using Unit = LanguageExt.Unit;
 
 namespace TransactionData.Service.Handlers.QueryHandlers
 {
-    public class GetTransactionQueryHandler : IRequestHandler<GetTransactionQuery, Result<List<GetTransactionDto>, string>>
+    public class GetTransactionQueryHandler : IRequestHandler<GetTransactionQuery, TryAsync<List<GetTransactionDto>>>
     {
         private readonly ITransactionRepository _transactionRepository;
         private readonly ITransactionDxo _transactionDxo;
@@ -28,25 +31,17 @@ namespace TransactionData.Service.Handlers.QueryHandlers
             _transactionDxo = transactionDxo;
         }
 
-        public async Task<Result<List<GetTransactionDto>, string>> Handle(GetTransactionQuery request, CancellationToken cancellationToken)
+        public async Task<TryAsync<List<GetTransactionDto>>> Handle(GetTransactionQuery request, CancellationToken cancellationToken)
         {
-            try
-            {
-                var transactions = await _transactionRepository.GetAll()
+            return TryAsync(await _transactionRepository.GetAll()
                     .Where(transaction =>
                         (request.Currency == null || request.Currency == transaction.CurrencyCode)
                         && (!request.To.HasValue || request.To.Value >= transaction.TransactionDate)
                         && (!request.From.HasValue || request.From.Value <= transaction.TransactionDate)
-                        && (request.Status == null || request.Status.Contains((GetTransactionStatusEnumQuery) transaction.Status)))
-                    .ToListAsync(cancellationToken: cancellationToken);
-
-                return _transactionDxo.MapTransaction(transactions)
-                    .Bind(Result.Success<List<GetTransactionDto>, string>);
-            }
-            catch (Exception e)
-            {
-                return Result.Failure< List<GetTransactionDto>, string>(e.InnerException?.Message ?? e.Message);
-            }
+                        && (request.Status == null ||
+                            request.Status.Contains((GetTransactionStatusEnumQuery) transaction.Status)))
+                    .ToListAsync(cancellationToken: cancellationToken))
+                .Bind(transactions => _transactionDxo.MapTransaction(transactions));
         }
     }
 }

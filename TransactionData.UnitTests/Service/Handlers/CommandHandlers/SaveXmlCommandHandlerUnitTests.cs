@@ -36,13 +36,13 @@ namespace TransactionData.UnitTests.Service.Handlers.CommandHandlers
                 xmlTransactionDxoMock.Object, 
                 mediatorMock.Object, 
                 xmlTransactionServiceMock.Object);
-            var result = await sut.Handle(saveXmlCommand, CancellationToken.None);
+            var Result = await sut.Handle(saveXmlCommand, CancellationToken.None);
 
             #endregion
 
             #region Assert
 
-            Assert.True(result.IsSuccess);
+            Assert.True(Result.IsSuccess);
 
             #endregion
         }

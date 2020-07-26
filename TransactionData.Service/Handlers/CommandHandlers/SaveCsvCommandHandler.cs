@@ -1,28 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using CSharpFunctionalExtensions;
-using CsvHelper;
 using MediatR;
-using TransactionData.Data.Entities.Entities;
 using TransactionData.Data.Interfaces.Interfaces;
 using TransactionData.Domain.Commands;
 using TransactionData.Domain.Events;
-using TransactionData.Domain.Models;
-using TransactionData.Service.CsvMap;
-using TransactionData.Service.Dxos;
-using TransactionData.Service.ExtensionMethods;
 using TransactionData.Service.Interfaces.Dxos;
 using TransactionData.Service.Interfaces.Services;
+using LanguageExt;
+using LanguageExt.Common;
+using LanguageExt.SomeHelp;
+using static LanguageExt.Prelude;
+using Unit = LanguageExt.Unit;
 
-namespace TransactionData.Service.Services
+namespace TransactionData.Service.Handlers.CommandHandlers
 {
-    public class SaveCsvCommandHandler : IRequestHandler<SaveCsvCommand, Result<Unit>>
+    public class SaveCsvCommandHandler : IRequestHandler<SaveCsvCommand, EitherAsync<Error, Unit>>
     {
         private readonly ITransactionRepository _transactionRepository;
         private readonly ICsvTransactionDxo _csvTransactionDxo;
@@ -40,27 +33,19 @@ namespace TransactionData.Service.Services
             _csvTransactionService = csvTransactionService;
         }
 
-        public async Task<Result<Unit>> Handle(SaveCsvCommand request, CancellationToken cancellationToken)
+        public Task<EitherAsync<Error, Unit>> Handle(SaveCsvCommand request, CancellationToken cancellationToken)
         {
-            try
-            {
-                return await _csvTransactionService.GetCsvTransactionModel(request)
-                    .Bind(csvTransactionModel => _csvTransactionDxo.MapTransaction(csvTransactionModel))
-                    .Bind(async transactions =>
+            return _csvTransactionService.GetCsvTransactionModel(request)
+                .Bind(csvTransactionModel => _csvTransactionDxo.MapTransaction(csvTransactionModel))
+                .Bind(transactions => _transactionRepository.CreateAsync(transactions))
+                .Bind(transactions => _transactionRepository.SaveAsync())
+                .Match(unit1 => unit1,
+                    error =>
                     {
-                        var result = await _transactionRepository.CreateAsync(transactions);
-                        return result.Bind(list => Result.Success(Unit.Value));
-                    })
-                    .Bind(async transactions => await _transactionRepository.SaveAsync())
-                    .OnFailure(error =>
-                        _mediator.Publish(SaveCsvFailedEvent.CreateInstance(error), cancellationToken));
-            }
-            catch (Exception e)
-            {
-                await _mediator.Publish(SaveCsvFailedEvent.CreateInstance(e.Message), cancellationToken);
-
-                return Result.Failure<Unit>(e.InnerException?.Message ?? e.Message);
-            }
+                        _mediator.Publish(SaveCsvFailedEvent.CreateInstance(error.Message),
+                            cancellationToken).ToUnit();
+                        return EitherAsync<Error, Unit>.Left(error);
+                    });
         }
     }
 }

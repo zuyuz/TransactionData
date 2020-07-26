@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using CSharpFunctionalExtensions;
+using LanguageExt;
+using LanguageExt.Common;
 using TransactionData.Domain.Commands;
 using TransactionData.Domain.Models;
 using TransactionData.Service.ExtensionMethods;
@@ -11,7 +12,7 @@ namespace TransactionData.Service.Services
 {
     public class CsvTransactionService : ICsvTransactionService
     {
-        public Result<List<CsvTransactionModel>> GetCsvTransactionModel(SaveCsvCommand command)
+        public TryAsync<List<CsvTransactionModel>> GetCsvTransactionModel(SaveCsvCommand command)
         {
             return command.GetCsvTransactionModel();
         }

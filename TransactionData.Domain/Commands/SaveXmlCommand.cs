@@ -1,10 +1,12 @@
 ﻿using System.IO;
-using CSharpFunctionalExtensions;
+using LanguageExt;
+using LanguageExt.Common;
 using MediatR;
+using Unit = LanguageExt.Unit;
 
 namespace TransactionData.Domain.Commands
 {
-    public class SaveXmlCommand : IRequest<Result<Unit>>
+    public class SaveXmlCommand : IRequest<EitherAsync<Error, Unit>>
     {
         public SaveXmlCommand(Stream stream)
         {

@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using CSharpFunctionalExtensions;
+using LanguageExt;
+using LanguageExt.Common;
 using MediatR;
+using Unit = LanguageExt.Unit;
 
 namespace TransactionData.Domain.Commands
 {
-    public class SaveCsvCommand : IRequest<Result<Unit>>
+    public class SaveCsvCommand : IRequest<EitherAsync<Error, Unit>>
     {
         public SaveCsvCommand(Stream stream)
         {
