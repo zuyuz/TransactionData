@@ -71,3 +71,6 @@ This project is based on ASP.NET Core 3.1. Represents outer layer of application
 
 This project contains application unit tests.
 
+## License
+
+The content of this project itself is licensed under the [Gnu general public license](https://github.com/zuyuz/TransactionData/blob/master/LICENSE)
